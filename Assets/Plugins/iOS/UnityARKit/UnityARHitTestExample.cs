@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 namespace UnityEngine.XR.iOS
 {
@@ -28,8 +29,10 @@ namespace UnityEngine.XR.iOS
 			{
 				var touch = Input.GetTouch(0);
 
-				if (touch.phase == TouchPhase.Began)
+				if (touch.phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(0))
 				{
+					transform.localPosition = Vector3.zero;
+
 					var screenPosition = Camera.main.ScreenToViewportPoint(touch.position);
 					ARPoint point = new ARPoint {
 						x = screenPosition.x,
