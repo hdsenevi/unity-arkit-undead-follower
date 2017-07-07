@@ -6,15 +6,15 @@ public class UndeadZombie : UndeadBase {
 	public override void Walk() {
 		base.Walk ();
 
-		if (_animation == null) {
+		if (_animator == null) {
 			return;
 		}
 
-		if (!_animation.isPlaying) {
-			_animation.Play ();
+		if (!_animator.GetBool("walk")) {
+			_animator.SetBool ("walk", true);
 			_shouldMove = true;
 		} else {
-			_animation.Stop ();
+			_animator.SetBool ("walk", false);
 			_shouldMove = false;
 		}
 	}
