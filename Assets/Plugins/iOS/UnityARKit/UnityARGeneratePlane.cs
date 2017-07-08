@@ -8,10 +8,24 @@ namespace UnityEngine.XR.iOS
 		public GameObject planePrefab;
         private UnityARAnchorManager unityARAnchorManager;
 
+		private bool _debugPlanesActive; 
+		public bool debugPlanesActive {
+			get {
+				return _debugPlanesActive;
+			}
+			set {
+				_debugPlanesActive = value;
+				CreatePlaneInSceneCallback ();
+			}
+		}
+
 		// Use this for initialization
 		void Start () {
+			debugPlanesActive = false;
+
             unityARAnchorManager = new UnityARAnchorManager();
 			UnityARUtility.InitializePlanePrefab (planePrefab);
+			UnityARUtility.onCreatePlaneInScene += CreatePlaneInSceneCallback;
 		}
 
         void OnDestroy()
@@ -28,6 +42,16 @@ namespace UnityEngine.XR.iOS
                 //GUI.Box(new Rect(100, 200, 800, 60), string.Format ("Extent: x:{0}, y:{1}, z:{2}", ap.extent.x, ap.extent.y, ap.extent.z));
             }
         }
+
+		void CreatePlaneInSceneCallback() {
+			Debug.Log("onCreatePlaneInScene " + Time.deltaTime);
+
+			GameObject[] gos = GameObject.FindGameObjectsWithTag ("DebugPlane");
+			foreach(GameObject go in gos) {
+				MeshRenderer mr = go.GetComponentInChildren<MeshRenderer> (true);
+				mr.enabled = debugPlanesActive;
+			}
+		}
 	}
 }
 

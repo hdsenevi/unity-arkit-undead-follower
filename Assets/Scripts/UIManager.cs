@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.iOS;
 
 public class UIManager : MonoBehaviour {
-	private Animator _animator;
-	private float _deltaTime = 0f;
+	public UnityARGeneratePlane generatePlanes;
+	private Animator 	_animator;
+	private float 		_deltaTime = 0f;
+
 
 	void Awake() {
 		_animator = GetComponent<Animator> ();
@@ -33,5 +36,12 @@ public class UIManager : MonoBehaviour {
 			_animator.SetBool ("enableUI", false);
 			_deltaTime = 0f;
 		}
+	}
+
+	public void ToggleDebugPlanes() {
+		if (generatePlanes == null)
+			return;
+
+		generatePlanes.debugPlanesActive = !generatePlanes.debugPlanesActive;
 	}
 }
