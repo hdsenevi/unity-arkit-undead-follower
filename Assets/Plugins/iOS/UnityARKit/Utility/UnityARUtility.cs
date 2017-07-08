@@ -8,6 +8,7 @@ namespace UnityEngine.XR.iOS
 		private MeshCollider meshCollider; //declared to avoid code stripping of class
 		private MeshFilter meshFilter; //declared to avoid code stripping of class
 		private static GameObject planePrefab = null;
+		public static Action onCreatePlaneInScene;
 
 		public static void InitializePlanePrefab(GameObject go)
 		{
@@ -24,6 +25,10 @@ namespace UnityEngine.XR.iOS
 			}
 
 			plane.name = arPlaneAnchor.identifier;
+
+			if (onCreatePlaneInScene != null) {
+				onCreatePlaneInScene();
+			}
 
 			return UpdatePlaneWithAnchorTransform(plane, arPlaneAnchor);
 

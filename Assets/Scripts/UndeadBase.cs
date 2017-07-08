@@ -2,30 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UndeadControl : MonoBehaviour {
+public abstract class UndeadBase : MonoBehaviour {
+	
+	protected Animation _animation;
+	protected Animator 	_animator;
+	protected bool 		_shouldMove = false;
 
-	private Animation _animation;
-	private bool _shouldMove = false;
-	// Use this for initialization
 	void Start () {
 		_animation = GetComponent<Animation> ();
+		_animator = GetComponent<Animator> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (_shouldMove) {
 			transform.Translate(Vector3.forward * Time.deltaTime * (transform.localScale.x * 0.05f));
 		}
 	}
 
-	public void Walk() {
-		if (!_animation.isPlaying) {
-			_animation.Play ();
-			_shouldMove = true;
-		} else {
-			_animation.Stop ();
-			_shouldMove = false;
-		}
+	public virtual void Walk() {
+		
 	}
 
 	public void LookAt() {
