@@ -52,5 +52,6 @@ public class UndeadControl : MonoBehaviour {
 			}
 		}
 
+		this.Walk ();
 	}
 }
