@@ -3,45 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
-public class UIManager : UIManagerBase {
-	public UnityARGeneratePlane generatePlanes;
-	private Animator 	_animator;
-	private float 		_deltaTime = 0f;
+public class UIManager : MonoBehaviour
+{
+    public UnityARGeneratePlane generatePlanes;
+    private Animator _animator;
+    private bool m_DebugPlanesVisible = true;
 
 
-	void Awake() {
-		_animator = GetComponent<Animator> ();
-	}
+    void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
-	public void EnableUIPanel() {
-		if (_animator == null) {
-			return;
-		}
+    void Start()
+    {
+        EnableUIPanel();
+    }
 
-		_deltaTime = 0f;
-			
-		_animator.SetBool ("enableUI", true);
-	}
+    public void EnableUIPanel()
+    {
+        if (_animator == null)
+        {
+            return;
+        }
+        _animator.SetBool("enableUI", true);
+    }
 
-	void Update() {
-		if (Input.touchCount > 0 || Input.GetMouseButton(0)) {
-			// We have a touch. Just reset _deltaTime
-			_deltaTime = 0f;
-		}
+    public void ToggleDebugPlanes()
+    {
+        if (generatePlanes == null)
+            return;
 
-		// Wait 5 seconds before dismissing the panel
-		if (_deltaTime < 5f) {
-			_deltaTime += Time.deltaTime;
-		} else {
-			_animator.SetBool ("enableUI", false);
-			_deltaTime = 0f;
-		}
-	}
-
-	public void ToggleDebugPlanes() {
-		if (generatePlanes == null)
-			return;
-
-		generatePlanes.debugPlanesActive = !generatePlanes.debugPlanesActive;
-	}
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("DebugPlane");
+        m_DebugPlanesVisible = !m_DebugPlanesVisible;
+        foreach (GameObject go in gos)
+        {
+            MeshRenderer mr = go.GetComponentInChildren<MeshRenderer>();
+            if (mr)
+            {
+                mr.enabled = m_DebugPlanesVisible;
+            }
+        }
+    }
 }
