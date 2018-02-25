@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public UnityARGeneratePlane generatePlanes;
     private Animator _animator;
     private float _deltaTime = 0f;
+    private bool m_DebugPlanesVisible = true;
 
 
     void Awake()
@@ -37,6 +38,15 @@ public class UIManager : MonoBehaviour
         if (generatePlanes == null)
             return;
 
-        generatePlanes.gameObject.SetActive(!generatePlanes.gameObject.activeSelf);
+        GameObject[] gos = GameObject.FindGameObjectsWithTag("DebugPlane");
+        m_DebugPlanesVisible = !m_DebugPlanesVisible;
+        foreach (GameObject go in gos)
+        {
+            MeshRenderer mr = go.GetComponentInChildren<MeshRenderer>();
+            if (mr)
+            {
+                mr.enabled = m_DebugPlanesVisible;
+            }
+        }
     }
 }
