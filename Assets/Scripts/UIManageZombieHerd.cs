@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
-public class UIManager : UIManagerBase {
+public class UIManageZombieHerd : UIManagerBase {
 	public UnityARGeneratePlane generatePlanes;
 	private Animator 	_animator;
 	private float 		_deltaTime = 0f;
