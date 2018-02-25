@@ -7,7 +7,6 @@ public class UIManager : MonoBehaviour
 {
     public UnityARGeneratePlane generatePlanes;
     private Animator _animator;
-    private float _deltaTime = 0f;
     private bool m_DebugPlanesVisible = true;
 
 
@@ -27,9 +26,6 @@ public class UIManager : MonoBehaviour
         {
             return;
         }
-
-        _deltaTime = 0f;
-
         _animator.SetBool("enableUI", true);
     }
 
